@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.ColumnConstraints?>
+<VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.SpendController">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+
+    <Label text="💸 THÊM GIAO DỊCH CHI TIÊU" styleClass="label-title" />
+    <Separator />
+
+    <GridPane hgap="10.0" vgap="15.0" alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" prefWidth="150.0" />
+            <ColumnConstraints prefWidth="250.0" />
+        </columnConstraints>
+
+        <Label text="Danh Mục Chi Tiêu:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <ComboBox fx:id="categoryComboBox" prefWidth="250.0" promptText="Chọn danh mục" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                  style="-fx-background-color: white ; -fx-border-color: #90a4ae; -fx-border-radius: 3;" />
+        <Label text="Số Tiền Chi Tiêu (đ):" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="moneyField" promptText="Ví dụ: 50000.00" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <Label text="Mục Đích (Ghi Chú):" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="purposeField" promptText="Ví dụ: Ăn trưa tại quán A" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    </GridPane>
+
+    <HBox alignment="CENTER" spacing="15.0" VBox.vgrow="ALWAYS" style="-fx-padding: 20 0 0 0;">
+        <Button text="LƯU CHI TIÊU" onAction="#handleSaveSpend" styleClass="button-save" />
+        <Button text="HỦY" onAction="#handleCancel" />
+    </HBox>
+</VBox>

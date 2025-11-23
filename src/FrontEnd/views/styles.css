@@ -1,0 +1,176 @@
+/* ==================================== */
+/* 1. ĐỊNH DẠNG CHUNG (GLOBAL STYLES)   */
+/* ==================================== */
+
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 11pt;
+    -fx-background-color: #fcfcfc; /* Nền trắng/sáng */
+}
+
+.label {
+    -fx-text-fill: #333333;
+}
+
+/* ==================================== */
+/* 2. HEADER & LABEL (TIÊU ĐỀ)          */
+/* ==================================== */
+
+.label-title {
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff80ab; /* Hồng Pastel */
+}
+
+.label-subtitle {
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #880e4f; /* Màu Berry đậm */
+    -fx-padding: 5 0 0 0;
+}
+
+#totalMoneyLabel {
+    -fx-font-size: 24pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #43a047; /* Xanh lá cây tiền tệ */
+}
+
+/* ==================================== */
+/* 3. HIỆU ỨNG CHUYỂN TIẾP & BUTTONS     */
+/* ==================================== */
+
+* {
+    /* Khai báo transition cho các hiệu ứng */
+    -fx-transition: -fx-background-color 0.2s, -fx-effect 0.2s, -fx-scale-y 0.2s, -fx-scale-x 0.2s;
+}
+
+.button {
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.0, 0, 1);
+    -fx-scale-y: 1.0;
+    -fx-scale-x: 1.0;
+}
+
+.button:hover {
+    -fx-opacity: 0.95;
+    -fx-scale-y: 1.05;
+    -fx-scale-x: 1.05;
+}
+
+.button:pressed {
+    -fx-scale-y: 0.95;
+    -fx-scale-x: 0.95;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 3, 0.0, 0, 0);
+}
+
+/* --- MÀU NÚT BẤM --- */
+.button-add-category {
+    -fx-background-color: #e8eb88; /* vàng chanh */
+    -fx-text-fill: #38002c;
+}
+
+.button-spend {
+    -fx-background-color: #ff80ab; /* HỒNG PASTEL */
+    -fx-text-fill: white;
+}
+
+.button-history {
+    -fx-background-color: #a7ffeb; /* Xanh ngọc nhạt */
+    -fx-text-fill: #004d40;
+}
+
+.button-save {
+    -fx-background-color: #d288eb;
+    -fx-text-fill: white;
+}
+
+/* ==================================== */
+/* 4. LISTVIEW & CUSTOM CELL (CARD STYLES) */
+/* ==================================== */
+
+/* Tương thích ComboBox: ListCell chung đơn giản */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.list-cell {
+    -fx-padding: 3px 10px 3px 10px; /* Padding nhỏ cho ComboBox */
+    -fx-background-color: white; /* Nền trắng mặc định */
+    -fx-text-fill: black; /* Màu chữ mặc định */
+}
+
+/* Quy tắc chỉ áp dụng cho ListView chính (Card View) */
+#categoryListView .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 8px 0; /* Khoảng cách dọc giữa các Card */
+}
+
+/* --- ĐỊNH NGHĨA CARD CƠ BẢN --- */
+.category-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ff80ab; /* Viền hồng pastel */
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 8, 0.0, 0, 2);
+    -fx-cursor: hand;
+    -fx-max-height: 80px;
+    -fx-min-height: 80px;
+    -fx-scale-y: 1.0;
+    -fx-scale-x: 1.0;
+}
+
+/* --- STYLE LABEL SỐ TIỀN --- */
+.label-balance {
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b5e20;
+}
+
+.label-spent {
+    -fx-font-size: 10pt;
+    -fx-text-fill: #d32f2f;
+}
+
+/* --- HIỆU ỨNG CARD HOVER & SELECTED --- */
+.list-cell:hover > .category-card {
+    -fx-background-color: #fff8e1; /* Vàng kem nhạt khi hover */
+    -fx-scale-y: 1.02;
+    -fx-scale-x: 1.02;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 15, 0.0, 0, 3);
+}
+
+.list-cell:selected > .category-card {
+    -fx-border-color: #ff80ab;
+    -fx-border-width: 2px;
+    -fx-scale-y: 0.98;
+    -fx-scale-x: 0.98;
+}
+
+.list-cell:filled:hover {
+    -fx-text-fill: black; /* Đảm bảo chữ màu đen khi hover */
+    -fx-background-color: #fff8e1; /* Nền vàng kem nhạt */
+}
+.list-cell:filled:selected, .list-cell:filled:focused {
+    -fx-text-fill: black; /* Đảm bảo chữ màu đen khi chọn */
+    -fx-background-color: white; /* Nền hồng pastel khi chọn */
+}
+
+/* ==================================== */
+/* 5. TEXTFIELD & COMBOBOX (NHẬP LIỆU)  */
+/* ==================================== */
+
+.text-field, .combo-box {
+    -fx-background-radius: 3;
+    -fx-border-color: #90a4ae;
+    -fx-border-radius: 3;
+    -fx-background-color: white;
+    -fx-prompt-text-fill: #999;
+    -fx-padding: 5 8;
+}

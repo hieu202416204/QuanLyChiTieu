@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.ColumnConstraints?>
+<VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.CategoryController">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+
+    <Label text="➕ QUẢN LÝ DANH MỤC" styleClass="label-title" />
+    <Separator />
+
+    <Label text="Tạo mới" styleClass="label-subtitle" />
+
+    <GridPane hgap="10.0" vgap="15.0" alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" prefWidth="150.0" />
+            <ColumnConstraints prefWidth="250.0" />
+        </columnConstraints>
+
+        <Label text="Tên Danh Mục:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="nameField" promptText="Tên Danh Mục" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Số Tiền:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="initialMoneyField" promptText="Ví dụ: 1000000.00" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    </GridPane>
+
+    <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20 0 0 0;">
+        <Button text="LƯU &amp; CẬP NHẬT" onAction="#handleSaveCategory" styleClass="button-save" />
+        <Button text="HỦY" onAction="#handleCancel" />
+    </HBox>
+</VBox>

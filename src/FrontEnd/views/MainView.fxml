@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+
+<?import javafx.scene.control.Tooltip?>
+<VBox alignment="TOP_CENTER" spacing="15.0" style="-fx-padding: 20;"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="FrontEnd.Controllers.MainController">
+
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+
+    <Label text="💰 TỔNG QUAN TÀI CHÍNH CÁ NHÂN" styleClass="label-title" />
+    <Separator />
+
+    <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-border-color: #2196F3; -fx-border-radius: 8; -fx-padding: 15; -fx-background-color: #E3F2FD;" prefHeight="60.0">
+        <Label text="Tổng Số Dư Hiện Tại:" styleClass="label-subtitle" />
+        <Label fx:id="totalMoneyLabel" text="0.00 đ" />
+    </HBox>
+
+    <Label text="Danh Mục Chi Tiêu &amp; Số Dư" styleClass="label-subtitle" />
+
+    <ListView fx:id="categoryListView" VBox.vgrow="ALWAYS" style="-fx-cell-size: 80px;" />
+    <HBox alignment="CENTER" spacing="10.0">
+        <Button text="➕ Thêm Danh Mục" onAction="#handleAddCategory" styleClass="button-add-category">
+            <tooltip>
+                <Tooltip text="Ấn đúp chuột vào danh mục để update tiền"/>
+            </tooltip>
+        </Button>
+        <Button text="💸 Thêm Chi Tiêu" onAction="#handleSpendMoney" styleClass="button-spend" />
+        <Button text="📜 Xem Lịch Sử" onAction="#handleShowHistory" styleClass="button-history" />
+        <Button text="🔄 Cập Nhật Dữ Liệu" onAction="#handleRefresh" />
+    </HBox>
+</VBox>
