@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
@@ -78,6 +80,34 @@ public class SpendController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        // 1. Tùy chỉnh Icon Cửa Sổ
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        try {
+            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.jpg"));
+            if (!windowIcon.isError()) {
+                stage.getIcons().add(windowIcon);
+            }
+        } catch (Exception e) {
+            System.err.println("Lỗi tải icon cửa sổ.");
+        }
+
+        // 2. TÙY CHỈNH BIỂU TƯỢNG BÊN TRONG (Thay thế dấu X/chấm than)
+        try {
+            // Tải ảnh sticker/icon tùy chỉnh
+            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.jpg"));
+
+            ImageView customImageView = new ImageView(customSticker);
+
+            // Đặt kích thước cho sticker để nó không quá lớn
+            customImageView.setFitWidth(48);
+            customImageView.setFitHeight(48);
+
+            // Đặt ImageView tùy chỉnh làm graphic của Alert
+            alert.setGraphic(customImageView);
+
+        } catch (Exception e) {
+            System.err.println("Lỗi tải sticker tùy chỉnh.");
+        }
         alert.showAndWait();
     }
 }

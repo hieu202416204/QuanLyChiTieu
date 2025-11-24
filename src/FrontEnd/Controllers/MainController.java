@@ -266,6 +266,33 @@ public class MainController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.showAndWait();
+// 1. Tùy chỉnh Icon Cửa Sổ
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        try {
+            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.jpg"));
+            if (!windowIcon.isError()) {
+                stage.getIcons().add(windowIcon);
+            }
+        } catch (Exception e) {
+            System.err.println("Lỗi tải icon cửa sổ.");
+        }
+
+        // 2. TÙY CHỈNH BIỂU TƯỢNG BÊN TRONG (Thay thế dấu X/chấm than)
+        try {
+            // Tải ảnh sticker/icon tùy chỉnh
+            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.jpg"));
+
+            ImageView customImageView = new ImageView(customSticker);
+
+            // Đặt kích thước cho sticker để nó không quá lớn
+            customImageView.setFitWidth(48);
+            customImageView.setFitHeight(48);
+
+            // Đặt ImageView tùy chỉnh làm graphic của Alert
+            alert.setGraphic(customImageView);
+
+        } catch (Exception e) {
+            System.err.println("Lỗi tải sticker tùy chỉnh.");
+        }
     }
 }

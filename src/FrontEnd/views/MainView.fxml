@@ -10,6 +10,8 @@
 <?import java.lang.String?>
 
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <VBox alignment="TOP_CENTER" spacing="15.0" style="-fx-padding: 20;"
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -19,8 +21,17 @@
         <URL value="@styles.css" />
     </stylesheets>
 
-    <Label text="💰 TỔNG QUAN TÀI CHÍNH CÁ NHÂN" styleClass="label-title" />
-    <Separator />
+    <HBox alignment="CENTER" spacing="8" styleClass="header-container">
+
+        <ImageView fitWidth="50" fitHeight="50">
+            <image>
+                <Image url="@../Image/6.jpg" />
+            </image>
+        </ImageView>
+
+        <Label text="QUẢN LÝ CHI TIÊU" styleClass="label-title" />
+
+    </HBox>    <Separator />
 
     <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-border-color: #2196F3; -fx-border-radius: 8; -fx-padding: 15; -fx-background-color: #E3F2FD;" prefHeight="60.0">
         <Label text="Tổng Số Dư Hiện Tại:" styleClass="label-subtitle" />
