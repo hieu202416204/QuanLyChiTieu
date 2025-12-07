@@ -5,73 +5,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChucNang {
+    private int idCategory;
     private String name;
-    private User user;
-    private BigDecimal moneyOfChucNang = BigDecimal.ZERO;
-    private BigDecimal tongSoTienDaTieu = BigDecimal.ZERO;
+    private BigDecimal moneyOfChucNang; // balance
+    private BigDecimal tongSoTienDaTieu;
     private List<PurposeUseMoney> history = new ArrayList<>();
+    private User user; // Dù không dùng trực tiếp, giữ lại để tương thích
 
-    public ChucNang(){}
-    public ChucNang(String name, User user, BigDecimal money){
+    // Constructor khi đọc từ DB
+    public ChucNang(int idCategory, String name, BigDecimal moneyOfChucNang, BigDecimal tongSoTienDaTieu, User user) {
+        this.idCategory = idCategory;
         this.name = name;
-        this.user = user;
-        this.moneyOfChucNang = money;
-    }
-
-    public void setCN(){
-        for(PurposeUseMoney p : this.history){
-            p.setChucNangCoDinh(this.name);
-        }
-    }
-    public void updateHitory(User user, String purposeName, BigDecimal bigDecimal) {
-        this.history.add(new PurposeUseMoney(user, purposeName, bigDecimal));
-    }
-
-    public void updateTongSoTienDaTieu(BigDecimal money) {
-        this.tongSoTienDaTieu = this.tongSoTienDaTieu.add(money);
-    }
-
-    public BigDecimal getTongSoTienDaTieu() {
-        return this.tongSoTienDaTieu;
-    }
-
-    public List<PurposeUseMoney> getHistory() {
-        return this.history;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setMoneyOfChucNang(BigDecimal moneyOfChucNang) {
         this.moneyOfChucNang = moneyOfChucNang;
+        this.tongSoTienDaTieu = tongSoTienDaTieu;
+        this.user = user;
     }
 
-    public BigDecimal getMoneyOfChucNang() {
-        return this.moneyOfChucNang;
-    }
-
-    public void setName(String name) {
+    // Constructor khi tạo mới
+    public ChucNang(String name, BigDecimal moneyOfChucNang, User user) {
         this.name = name;
+        this.moneyOfChucNang = moneyOfChucNang;
+        this.tongSoTienDaTieu = BigDecimal.ZERO;
+        this.user = user;
     }
 
-    public String getName() {
-        return this.name;
-    }
-    public void updateMoney(BigDecimal money){
-        this.moneyOfChucNang = this.moneyOfChucNang.add(money);
-    }
-    public boolean spendMoney(String purposeName, BigDecimal money){
-        if(this.getMoneyOfChucNang().compareTo(money)<0){
-            return false;
-        }
-        this.moneyOfChucNang = this.moneyOfChucNang.subtract(money);
-        this.updateTongSoTienDaTieu(money);
-        this.updateHitory(this.user, purposeName, money);
-        return true;
+    // Getters (cần thiết cho MainController & CategoryDetailController)
+    public int getIdCategory() { return idCategory; }
+    public String getName() { return name; }
+    public BigDecimal getMoneyOfChucNang() { return moneyOfChucNang; }
+    public BigDecimal getTongSoTienDaTieu() { return tongSoTienDaTieu; }
+    public List<PurposeUseMoney> getHistory() { return history; }
+    public User getUser() { return user; }
+
+    // Setters (để cập nhật dữ liệu từ DB)
+    public void setHistory(List<PurposeUseMoney> history) { this.history = history; }
+    public void setMoneyOfChucNang(BigDecimal moneyOfChucNang) { this.moneyOfChucNang = moneyOfChucNang; }
+    public void setTongSoTienDaTieu(BigDecimal tongSoTienDaTieu) { this.tongSoTienDaTieu = tongSoTienDaTieu; }
+
+    // Phương thức giả lập từ file .class, có thể bị loại bỏ khi dùng DB
+    public void setCN() {
+        // Trong DB, việc này được thay thế bằng JOIN khi tải lịch sử
+        history.forEach(p -> p.setChucNangCoDinh(this.name));
     }
 }

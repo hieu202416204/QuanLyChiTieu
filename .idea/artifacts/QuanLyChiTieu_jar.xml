@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="QuanLyChiTieu:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/QuanLyChiTieu_jar</output-path>
+    <root id="archive" name="QuanLyChiTieu.jar">
+      <element id="module-output" name="QuanLyChiTieu" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../xerial-sqlite-jdbc-bd3e0da/lib/jdbc-api-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx.base.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/jdk.jsobject.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/jfx.incubator.input.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../javafx-sdk-25.0.1/lib/jfx.incubator.richtext.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/sqlite-jdbc-3.51.0.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

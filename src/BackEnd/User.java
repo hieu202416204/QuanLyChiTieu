@@ -3,45 +3,28 @@ package BackEnd;
 import java.math.BigDecimal;
 
 public class User {
-    private String nameUser;
     private String idUser;
-    private BigDecimal moneyOfUser = BigDecimal.ZERO;
+    private String nameUser;
+    private BigDecimal moneyOfUser;
 
+    public User(String idUser, String nameUser, BigDecimal moneyOfUser) {
+        this.idUser = idUser;
+        this.nameUser = nameUser;
+        this.moneyOfUser = moneyOfUser;
+    }
+
+    // Constructor đơn giản cho MainController
     public User() {
+        this("default_user", "Người Dùng Mặc Định", BigDecimal.ZERO);
     }
 
-    public User(String nameUser, String idUser, BigDecimal moneyOfUser) {
-        this.nameUser = nameUser;
-        this.idUser = idUser;
-        this.moneyOfUser = moneyOfUser;
-    }
+    // Getters
+    public String getIdUser() { return idUser; }
+    public String getNameUser() { return nameUser; }
+    public BigDecimal getMoneyOfUser() { return moneyOfUser; }
 
-    public void setNameUser(String nameUser) {
-        this.nameUser = nameUser;
-    }
-
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
-    }
-
-    public void setMoneyOfUser(BigDecimal moneyOfUser) {
-        this.moneyOfUser = moneyOfUser;
-    }
-
-    public String getNameUser() {
-        return this.nameUser;
-    }
-
-    public BigDecimal getMoneyOfUser() {
-        return this.moneyOfUser;
-    }
-
-    public String getIdUser() {
-        return this.idUser;
-    }
-    public void inTTin(){
-        System.out.println(this.nameUser);
-        System.out.println(this.idUser);
-        System.out.println(this.moneyOfUser);
-    }
+    // Setters
+    public void setMoneyOfUser(BigDecimal moneyOfUser) { this.moneyOfUser = moneyOfUser; }
+    public void setNameUser(String nameUser) { this.nameUser = nameUser; }
+    public void setIdUser(String idUser) { this.idUser = idUser; }
 }

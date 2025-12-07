@@ -12,7 +12,10 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.ColumnConstraints?>
-<VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.SpendController">
+<VBox alignment="TOP_CENTER" spacing="10.0"  style="-fx-padding: 20;
+-fx-background-image: url('FrontEnd/Image/BackGround04.png');
+-fx-background-size: contain;     -fx-background-repeat: no-repeat;
+-fx-background-position: center;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.SpendController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
@@ -26,13 +29,13 @@
             <ColumnConstraints prefWidth="250.0" />
         </columnConstraints>
 
-        <Label text="Danh Mục Chi Tiêu:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <Label text="Danh Mục Chi Tiêu:" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0" />
         <ComboBox fx:id="categoryComboBox" prefWidth="250.0" promptText="Chọn danh mục" GridPane.rowIndex="0" GridPane.columnIndex="1"
                   style="-fx-background-color: white ; -fx-border-color: #90a4ae; -fx-border-radius: 3;" />
-        <Label text="Số Tiền Chi Tiêu (đ):" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <Label text="Số Tiền Chi Tiêu (đ):" style="-fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0" />
         <TextField fx:id="moneyField" promptText="Ví dụ: 50000.00" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-        <Label text="Mục Đích (Ghi Chú):" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <Label text="Mục Đích (Ghi Chú):" style="-fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnIndex="0" />
         <TextField fx:id="purposeField" promptText="Ví dụ: Ăn trưa tại quán A" GridPane.rowIndex="2" GridPane.columnIndex="1" />
     </GridPane>
 

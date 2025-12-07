@@ -11,26 +11,26 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.ColumnConstraints?>
-<VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.CategoryController">
+<VBox alignment="TOP_CENTER" spacing="10.0"  style="-fx-padding: 20;
+-fx-background-image: url('FrontEnd/Image/BackGround02.png');
+-fx-background-size: contain;     -fx-background-repeat: no-repeat;
+-fx-background-position: center;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.CategoryController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
 
     <Label text="➕ QUẢN LÝ DANH MỤC" styleClass="label-title" />
     <Separator />
-
-    <Label text="Tạo mới" styleClass="label-subtitle" />
-
     <GridPane hgap="10.0" vgap="15.0" alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints halignment="RIGHT" prefWidth="150.0" />
             <ColumnConstraints prefWidth="250.0" />
         </columnConstraints>
 
-        <Label text="Tên Danh Mục:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <Label text="Tên Danh Mục:" style="-fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0" />
         <TextField fx:id="nameField" promptText="Tên Danh Mục" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-        <Label text="Số Tiền:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <Label text="Số Tiền:" style="-fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0" />
         <TextField fx:id="initialMoneyField" promptText="Ví dụ: 1000000.00" GridPane.rowIndex="1" GridPane.columnIndex="1" />
     </GridPane>
 

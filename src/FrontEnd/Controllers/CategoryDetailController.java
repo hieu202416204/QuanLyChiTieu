@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 
 public class CategoryDetailController {
 
@@ -27,7 +28,6 @@ public class CategoryDetailController {
         this.moneyManager = manager;
     }
 
-    // Phương thức này được gọi từ MainController để truyền danh mục đang được chọn
     public void setChucNang(ChucNang cn) {
         this.currentChucNang = cn;
         updateDisplay();
@@ -35,10 +35,15 @@ public class CategoryDetailController {
 
     private void updateDisplay() {
         if (currentChucNang != null) {
-            categoryNameLabel.setText("Chi Tiết: " + currentChucNang.getName());
-            currentBalanceLabel.setText(currentChucNang.getMoneyOfChucNang()
+            // Tải lại ChucNang mới nhất từ MoneyManager (sau khi DB đã update)
+            ChucNang updatedCn = moneyManager.getChucNangList().stream()
+                    .filter(cn -> cn.getName().equals(currentChucNang.getName()))
+                    .findFirst().orElse(currentChucNang);
+
+            categoryNameLabel.setText("Chi Tiết: " + updatedCn.getName());
+            currentBalanceLabel.setText(updatedCn.getMoneyOfChucNang()
                     .setScale(2, RoundingMode.HALF_UP).toPlainString() + " đ");
-            totalSpentLabel.setText(currentChucNang.getTongSoTienDaTieu()
+            totalSpentLabel.setText(updatedCn.getTongSoTienDaTieu()
                     .setScale(2, RoundingMode.HALF_UP).toPlainString() + " đ");
         }
     }
@@ -58,10 +63,10 @@ public class CategoryDetailController {
                 return;
             }
 
-            // Gọi hàm cập nhật tiền trong MoneyManager
+            // Gọi hàm cập nhật tiền và lưu vào DB
             moneyManager.updateMoney(currentChucNang.getName(), amount);
 
-            // Cập nhật giao diện chi tiết ngay lập tức
+            // Cập nhật giao diện chi tiết ngay lập tức (sau khi MoneyManager đã loadAllData())
             updateDisplay();
             topUpAmountField.clear();
 
@@ -69,6 +74,10 @@ public class CategoryDetailController {
 
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Số tiền không hợp lệ.");
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi DB", "Lỗi SQL: " + e.getMessage());
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", e.getMessage());
         }
     }
 
@@ -76,18 +85,18 @@ public class CategoryDetailController {
     public void handleClose() {
         Stage stage = (Stage) categoryNameLabel.getScene().getWindow();
         stage.close();
-        // MainController sẽ tự động refresh sau khi cửa sổ này đóng
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
+        // ... (Giữ nguyên logic showAlert)
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-// 1. Tùy chỉnh Icon Cửa Sổ (giữ nguyên code của bạn)
+// 1. Tùy chỉnh Icon Cửa Sổ
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         try {
-            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.jpg"));
+            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.png"));
             if (!windowIcon.isError()) {
                 stage.getIcons().add(windowIcon);
             }
@@ -97,16 +106,13 @@ public class CategoryDetailController {
 
         // 2. TÙY CHỈNH BIỂU TƯỢNG BÊN TRONG (Thay thế dấu X/chấm than)
         try {
-            // Tải ảnh sticker/icon tùy chỉnh của bạn
-            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.jpg"));
+            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.png"));
 
             ImageView customImageView = new ImageView(customSticker);
 
-            // Đặt kích thước cho sticker để nó không quá lớn (rất quan trọng)
             customImageView.setFitWidth(48);
             customImageView.setFitHeight(48);
 
-            // Đặt ImageView tùy chỉnh làm graphic của Alert
             alert.setGraphic(customImageView);
 
         } catch (Exception e) {

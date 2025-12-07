@@ -11,7 +11,10 @@
 <?import javafx.geometry.Insets?>
 
 <?import javafx.scene.layout.ColumnConstraints?>
-<VBox alignment="TOP_CENTER" spacing="15.0" style="-fx-padding: 20;"
+<VBox alignment="TOP_CENTER" spacing="15.0"  style="-fx-padding: 20;
+-fx-background-image: url('FrontEnd/Image/BackGround02.png');
+-fx-background-size: contain;     -fx-background-repeat: no-repeat;
+-fx-background-position: center;"
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="FrontEnd.Controllers.CategoryDetailController">

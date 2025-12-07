@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 public class SpendController {
@@ -22,7 +23,7 @@ public class SpendController {
 
     public void setMoneyManager(MoneyManager manager) {
         this.moneyManager = manager;
-        // Khởi tạo ComboBox với danh sách tên các ChucNang
+        // Khởi tạo ComboBox với danh sách tên các ChucNang (load từ bộ nhớ của MoneyManager)
         if (moneyManager.getChucNangList() != null) {
             categoryComboBox.setItems(moneyManager.getChucNangList().stream()
                     .map(cn -> cn.getName())
@@ -30,14 +31,10 @@ public class SpendController {
         }
     }
 
-    // Phương thức này hiện không cần thiết vì việc refresh đã được MainApp xử lý sau khi cửa sổ này đóng.
-    // public void setMainController(MainController mainController) { ... }
-
     @FXML
     public void handleSaveSpend() {
         String categoryName = categoryComboBox.getValue();
         String purposeName = purposeField.getText();
-        BigDecimal money;
 
         if (categoryName == null || purposeName == null || purposeName.trim().isEmpty() || moneyField.getText().trim().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng chọn danh mục và điền đầy đủ thông tin.");
@@ -45,23 +42,30 @@ public class SpendController {
         }
 
         try {
-            money = new BigDecimal(moneyField.getText());
+            BigDecimal money = new BigDecimal(moneyField.getText());
             if (money.compareTo(BigDecimal.ZERO) <= 0) {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Số tiền phải lớn hơn 0.");
                 return;
             }
+
+            // GỌI LOGIC LƯU VÀO DB
+            boolean success = moneyManager.spendMoney(categoryName, money, purposeName);
+
+            if (success) {
+                showAlert(Alert.AlertType.INFORMATION, "Thành Công", "Chi tiêu đã được ghi nhận thành công!");
+                closeWindow();
+            } else {
+                // Nếu chi tiêu thất bại (thiếu tiền), MoneyManager đã cập nhật lại data
+                String currentBalance = moneyManager.getChucNangList().stream()
+                        .filter(cn -> cn.getName().equals(categoryName))
+                        .findFirst().map(cn -> cn.getMoneyOfChucNang().toPlainString()).orElse("0.00");
+
+                showAlert(Alert.AlertType.ERROR, "Lỗi Chi Tiêu", "Số dư trong danh mục **" + categoryName + "** không đủ (" + currentBalance + " đ còn lại).");
+            }
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Số tiền không hợp lệ.");
-            return;
-        }
-
-        boolean success = moneyManager.spendMoney(categoryName, money, purposeName);
-
-        if (success) {
-            showAlert(Alert.AlertType.INFORMATION, "Thành Công", "Chi tiêu đã được ghi nhận thành công!");
-            closeWindow();
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Lỗi Chi Tiêu", "Số dư trong danh mục **" + categoryName + "** không đủ (" + moneyManager.getChucNangList().stream().filter(cn -> cn.getName().equals(categoryName)).findFirst().get().getMoneyOfChucNang() + " đ còn lại).");
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi DB", "Lỗi SQL: " + e.getMessage());
         }
     }
 
@@ -80,10 +84,10 @@ public class SpendController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        // 1. Tùy chỉnh Icon Cửa Sổ
+// 1. Tùy chỉnh Icon Cửa Sổ
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         try {
-            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.jpg"));
+            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.png"));
             if (!windowIcon.isError()) {
                 stage.getIcons().add(windowIcon);
             }
@@ -91,18 +95,14 @@ public class SpendController {
             System.err.println("Lỗi tải icon cửa sổ.");
         }
 
-        // 2. TÙY CHỈNH BIỂU TƯỢNG BÊN TRONG (Thay thế dấu X/chấm than)
+        // 2. TÙY CHỈNH BIỂU TƯỢNG BÊN TRONG
         try {
-            // Tải ảnh sticker/icon tùy chỉnh
-            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.jpg"));
-
+            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.png"));
             ImageView customImageView = new ImageView(customSticker);
 
-            // Đặt kích thước cho sticker để nó không quá lớn
             customImageView.setFitWidth(48);
             customImageView.setFitHeight(48);
 
-            // Đặt ImageView tùy chỉnh làm graphic của Alert
             alert.setGraphic(customImageView);
 
         } catch (Exception e) {

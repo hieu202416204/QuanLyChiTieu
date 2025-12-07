@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 
 public class CategoryController {
     @FXML private TextField nameField;
@@ -29,32 +30,29 @@ public class CategoryController {
             return;
         }
 
-        // 1. KIỂM TRA: DANH MỤC ĐÃ TỒN TẠI CHƯA?
-        boolean categoryExists = moneyManager.getChucNangList().stream()
-                .anyMatch(cn -> cn.getName().equalsIgnoreCase(name));
-
-        if (categoryExists) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Danh mục == " + name + " == đã tồn tại. Vui lòng sử dụng chức năng Nạp Tiền.");
-            return; // Dừng lại nếu tên đã tồn tại
-        }
-
         try {
             money = new BigDecimal(initialMoneyField.getText());
             if (money.compareTo(BigDecimal.ZERO) < 0) {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Số tiền ban đầu không được âm.");
                 return;
             }
+
+            // GỌI LOGIC LƯU VÀO DB trong MoneyManager
+            moneyManager.createNewCategory(name, money);
+
+            showAlert(Alert.AlertType.INFORMATION, "Thành Công", "Danh mục == " + name + " == đã được tạo thành công với " + money + " đ.");
+            closeWindow();
+
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Số tiền không hợp lệ.");
-            return;
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi DB", "Lỗi SQL: " + e.getMessage());
+        } catch (Exception e) {
+            // Lỗi danh mục đã tồn tại
+            showAlert(Alert.AlertType.ERROR, "Lỗi", e.getMessage() + " Vui lòng sử dụng chức năng Nạp Tiền.");
         }
-
-        // 2. TẠO DANH MỤC MỚI
-        moneyManager.updateChucNangList(name, moneyManager.getUser(), money);
-        showAlert(Alert.AlertType.INFORMATION, "Thành Công", "Danh mục == " + name + " == đã được tạo thành công với " + money + " đ.");
-
-        closeWindow();
     }
+
     @FXML
     public void handleCancel() {
         closeWindow();
@@ -63,7 +61,6 @@ public class CategoryController {
     private void closeWindow() {
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();
-        // Phương thức openNewWindow trong MainController sẽ tự động gọi handleRefresh() sau khi cửa sổ này đóng.
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
@@ -71,10 +68,11 @@ public class CategoryController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
         // 1. Tùy chỉnh Icon Cửa Sổ
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         try {
-            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.jpg"));
+            Image windowIcon = new Image(getClass().getResourceAsStream("/FrontEnd/Image/4.png"));
             if (!windowIcon.isError()) {
                 stage.getIcons().add(windowIcon);
             }
@@ -82,18 +80,14 @@ public class CategoryController {
             System.err.println("Lỗi tải icon cửa sổ.");
         }
 
-        // 2. TÙY CHỈNH BIỂU TƯỢNG BÊN TRONG (Thay thế dấu X/chấm than)
+        // 2. TÙY CHỈNH BIỂU TƯỢNG BÊN TRONG
         try {
-            // Tải ảnh sticker/icon tùy chỉnh
-            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.jpg"));
-
+            Image customSticker = new Image(getClass().getResourceAsStream("/FrontEnd/Image/2.png"));
             ImageView customImageView = new ImageView(customSticker);
 
-            // Đặt kích thước cho sticker để nó không quá lớn (rất quan trọng)
             customImageView.setFitWidth(48);
             customImageView.setFitHeight(48);
 
-            // Đặt ImageView tùy chỉnh làm graphic của Alert
             alert.setGraphic(customImageView);
 
         } catch (Exception e) {

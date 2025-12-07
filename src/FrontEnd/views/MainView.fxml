@@ -12,7 +12,10 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<VBox alignment="TOP_CENTER" spacing="15.0" style="-fx-padding: 20;"
+<VBox alignment="TOP_CENTER" spacing="15.0" style="-fx-padding: 20;
+-fx-background-image: url('FrontEnd/Image/BackGround.png');
+-fx-background-size: contain;     -fx-background-repeat: no-repeat;
+-fx-background-position: center;"
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="FrontEnd.Controllers.MainController">
@@ -25,7 +28,7 @@
 
         <ImageView fitWidth="50" fitHeight="50">
             <image>
-                <Image url="@../Image/6.jpg" />
+                <Image url="@../Image/6.png" />
             </image>
         </ImageView>
 

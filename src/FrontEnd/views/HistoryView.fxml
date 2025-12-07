@@ -10,7 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
 
-<VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.HistoryController">
+<VBox alignment="TOP_CENTER" spacing="10.0"   style="-fx-padding: 20;
+-fx-background-image: url('FrontEnd/Image/BackGround03.png');
+-fx-background-size: contain;     -fx-background-repeat: no-repeat;
+-fx-background-position: center;" xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrontEnd.Controllers.HistoryController">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
@@ -35,6 +39,6 @@
     </TableView>
 
     <HBox alignment="CENTER" style="-fx-padding: 10 0 0 0;">
-        <Button text="Đóng" onAction="#handleClose" />
+        <Button text="Đóng" onAction="#handleClose" styleClass="button-close" />
     </HBox>
 </VBox>
